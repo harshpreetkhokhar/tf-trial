@@ -1,0 +1,33 @@
+# This is a basic workflow to help you get started with Actions
+name: CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the main branch
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    # This step saves your AWS access and secret key to be used by Terraform
+    - name: Set up AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        # aws-region: ${{ secrets.AWS_REGION }}
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 0.13.4
+    - name: Terraform Init
+      run: terraform init
+    - name: Terraform Apply
+      run: terraform apply -auto-approve
+      env:
+        
