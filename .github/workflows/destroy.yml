@@ -31,25 +31,4 @@ jobs:
 
     - name: Terraform destroy
       id: destroy
-      run: name: Destroy Terraform Resources
-
-on:
-  workflow_dispatch:
-
-jobs:
-  destroy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_version: 0.13.4
-
-      - name: Terraform Init
-        run: terraform init
-
-      - name: Terraform Destroy
-        run: terraform destroy -auto-approve -refresh=false
+      run: terraform destroy -auto-approve -refresh=false
