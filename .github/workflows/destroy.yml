@@ -20,7 +20,14 @@ jobs:
       uses: hashicorp/setup-terraform@v1
       with:
         terraform_version: 0.13.4
-    - name: Terraform Init
-      run: terraform init
-    - name: Terraform Destroy
-      run: terraform destroy -auto-approve
+ - name: Terraform Init
+        id: init
+        run: terraform init  
+        
+      - name: Show Destroy plan
+        run: terraform plan -destroy
+        # continue-on-error: true
+
+      - name: Terraform destroy
+        id: destroy
+        run: terraform destroy -auto-approve
