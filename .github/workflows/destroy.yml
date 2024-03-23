@@ -31,4 +31,9 @@ jobs:
 
     - name: Terraform destroy
       id: destroy
-      run: terraform destroy -auto-approve
+      run: |
+          terraform destroy -auto-approve -target=aws_iam_group_policy_attachment.attachment
+          terraform destroy -auto-approve -target=aws_iam_group_membership.membership
+          terraform destroy -auto-approve -target=aws_iam_group.Group
+          terraform destroy -auto-approve -target=aws_iam_policy.policy
+          terraform destroy -auto-approve -target=aws_iam_user.user
